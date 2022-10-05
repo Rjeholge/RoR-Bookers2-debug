@@ -20,4 +20,40 @@ class User < ApplicationRecord
     end
       profile_image.variant(resize_to_limit: [width, height]).processed
   end
+
+  # foreign_key（FK）には、@user.xxxとした際に「@user.idがfollower_idなのかfollowed_idなのか」を指定します。
+    #has_many :xxx, class_name: "モデル名", foreign_key: "○○_id", dependent: :destroy
+  # @user.booksのように、@user.yyyで、
+  # そのユーザがフォローしている人orフォローされている人の一覧を出したい
+    #has_many :yyy, through: :xxx, source: :zzz
+
+  #１ followed = フォローされる人から見た、自分をフォローしてくれてる人たち(フォロワーさんたち)一覧
+  #         ↓viewで呼び出す時に使用する
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+ #自分をフォローしてる人たちを、中間テーブル"reverse_of_relationships"を通じて確認します。情報元はRelationshipモデルで取ってきたfollowerという情報です。
+ #中間テーブルを経由して「多対多」のテーブルへアソシエーションを組むには、これまで使用してきたhas_manyメソッドに、throughオプションを記述する必要がある。
+ #親要素(この場合はfollowed_id側のuser)が孫要素(この場合はfollower_id側のuserたち)の情報にアクセスしたい場合、中間テーブルを介する必要がある。
+ #中間テーブルにおいては、どのfollowed_userがどのfollower_userを持ってるか？という情報を持っている。
+
+  #２ follower = フォローする人から見た、自分がフォローしてる人たち(フォローウィングしてる人たち)一覧
+  #↓viewで呼び出す時に使用する
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, through: :relationships, source: :followed
+ #          ↑フォローしてる人たち、の意味で"followings"とした
+ #自分がフォローしてる人たちを、中間テーブル"relationships"を通じて確認します。情報元はRelationshipモデルで取ってきたfollowedという情報です。
+
+  # フォローしたときの処理
+  def follow(user_id)
+    relationships.create(followed_id: user_id)
+  end
+  # フォローを外すときの処理
+  def unfollow(user_id)
+    relationships.find_by(followed_id: user_id).destroy
+  end
+  # フォローしているか判定
+  def following?(user)
+    followings.include?(user)
+  end
+
 end
