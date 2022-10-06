@@ -3,19 +3,20 @@ class SearchesController < ApplicationController
 
   def search
     @range = params[:range]
+    @word = params[:word]
+    @search = params[:search]
 
-    if @range == "User"
-      @users = User.looks(params[:search], params[:word])
+    if @range == "user"
+      @records = User.search_for(@word, @search)
     else
-      @books = Book.looks(params[:search], params[:word])
+      @records = Book.search_for(@word, @search)
     end
   end
 end
 
-#ここで定義している@usersって、どこのusersだ？
 #１、下記コードにて検索フォームから情報を受け取っている
 #検索モデル params[:range]
 #検索方法 params[:search]
 #検索ワード params[:word]
-#２、if分を使って、検索モデルをUser or Bookで条件分岐
-#３、looksメソッドを使い、検索内容を取得し、変数に代入
+#２、if文を使って、検索モデルをUser or Bookで条件分岐
+#３、search_forメソッドを使い、検索内容を取得し、変数@recordsに代入
