@@ -46,6 +46,47 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+
+  # Hataribar確認画面記述
+
+  # def confirm
+  #   @post = Post.new(@temporarily)
+  #   if @post.invalid?
+  #     render :new
+  #   end
+  # end
+
+  # def back
+  #   @post = Post.new(@temporarily)
+  #   render :new
+  # end
+
+  # def complete
+  #   Post.create!(@temporarily)
+  # end
+
+  #def create
+    #post = Post.new(post_params)
+    #post.save
+    #redirect_to post_path(post.id)
+  #end
+
+    #def post_params
+      #params.require(:post).permit(:user_id, :industry_id, :answer_what, :answer_employment_type,
+      #:answer_working_style, :answer_income, :answer_how, :answer_skill, :answer_why,
+      #:answer_aptitude, :answer_future, :answer_advantage, :answer_free)
+    #end
+
+      # @temporarily = params.require('post').permit(:id, :user_id, :industry_id, :answer_what, :answer_employment_status,
+      # :answer_working_style, :answer_income, :answer_how, :answer_skill, :answer_why,
+      # :answer_aptitude, :answer_future, :answer_advantage, :answer_free)
+
+    # def move_to_signed_in
+    #   unless user_signed_in?
+    #     redirect_to new_user_session_path
+    #   end
+    # end
+
   private
 
   def book_params

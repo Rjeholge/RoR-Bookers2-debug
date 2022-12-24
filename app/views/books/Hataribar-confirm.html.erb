@@ -1,0 +1,90 @@
+<div class="row mb-5">
+  <div class="mx-auto">
+    <h3>ご回答いただいた内容をご確認ください。</h3>
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="mx-auto">
+    <div class="col-md-12">
+
+        <div class="field">
+          <h4>業種</h4>
+          <p><%= post.industry %></p>
+        </div>
+        <div class="field">
+          <h4>どんなお仕事ですか？職種や働く場所、業務内容を教えてください。</h4>
+          <p><%= post.answer_what %></p>
+        </div>
+        <div class="field">
+          <h4>雇用形態は？</h4>
+          <p><%= post.answer_employment_type %></p>
+        </div>
+        <div class="field">
+          <h4>勤務形態は？</h4>
+          <p><%= post.answer_working_style %></p>
+        </div>
+        <div class="field">
+          <h4>年収(額面の金額)や手取りの金額を教えてください。</h4>
+          <p><%= post.answer_income %></p>
+        </div>
+        <div class="field">
+          <h4>その仕事にはどうやってなりましたか？学歴や経歴などを教えてください。</h4>
+          <p><%= post.answer_how %></p>
+        </div>
+        <div class="field">
+          <h4>その仕事をする為に必要な資格やスキルはありますか？</h4>
+          <p><%= post.answer_skill %></p>
+        </div>
+        <div class="field">
+          <h4>なぜその仕事をやろうと思いましたか？</h4>
+          <p><%= post.answer_why %></p>
+        </div>
+        <div class="field">
+          <h4>その仕事に向いている人の特徴はありますか？自分自身の性格や、周りにいた方はどんな感じでしたか？</h4>
+          <p><%= post.answer_aptitude %></p>
+        </div>
+        <div class="field">
+          <h4>その仕事の将来性をどう考えますか？</h4>
+          <p><%= post.answer_future %></p>
+        </div>
+        <div class="field">
+          <h4>その仕事をやっていて良かったこと、メリットだと感じたこと、やりがいなどを教えてください。</h4>
+          <p><%= post.answer_advantage %></p>
+        </div>
+        <div class="field">
+          <h4>最後に、これからその仕事をやろうとする人へのコメントなど自由に意見をください。</h4>
+          <p><%= post.answer_free %></p>
+        </div>
+
+　　　<div class="col mt-5">
+        <h4>以上の内容で投稿いたしますか？</h4>
+        <h4>※投稿内容は後から編集・削除が可能です。</h4>
+      </div>
+
+      <%= form_with model: @post, method: :post, url: posts_back_path do |f| %>
+
+        <%= render "public/posts/confirm" %>
+        <div class="col mt-5 text-center">
+          <div class="actions">
+            <%= f.submit "入力画面へ戻る", class: "btn btn-dark" %>
+          </div>
+        </div>
+
+      <% end %>
+
+      <%= form_with model: @post, method: :post, url: posts_complete_path do |f| %>
+
+        <%= render "public/posts/confirm" %>
+        <div class="col mt-5 text-center">
+          <div class="actions">
+            <%= f.submit "投稿する", class: "btn btn-dark" %>
+          </div>
+        </div>
+
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
